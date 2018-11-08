@@ -18,6 +18,9 @@
         "symfony/thanks": "^1.0"
     },
     "autoload": {
+        "files": [
+            "bootstrap/helpers.php"
+        ],
         "classmap": [
             "database/seeds",
             "database/factories"
