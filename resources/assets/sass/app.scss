@@ -13,6 +13,15 @@ body {
     margin-bottom: 30px;
     margin-top: 0px;
 
+    img.avatar {
+        height: 30px;
+        width: 30px;
+    }
+
+    #logout-form {
+        display: none;
+    }
+
     .navbar-toggle {
         margin-top: 12px;
         border-color: #fff;

@@ -22,7 +22,7 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                             <span class="user-avatar pull-left" style="margin-right:8px; margin-top:-5px;">
-                                <img src="https://gravatar.loli.net/avatar/53a96cf46c5bd43141256fc4134a1cbb?s=60" class="img-responsive img-circle" width="30px" height="30px">
+                                <img src="{{ Auth::user()->avatar(60) }}" class="avatar img-responsive img-circle">
                             </span>
                             <span class="caret"></span>
                         </a>
@@ -33,7 +33,7 @@
                                              document.getElementById('logout-form').submit();">
                                     退出登录
                                 </a>
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST">
                                     {{ csrf_field() }}
                                 </form>
                             </li>
