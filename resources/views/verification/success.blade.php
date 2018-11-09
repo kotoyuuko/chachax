@@ -3,5 +3,7 @@
 
 @section('message.body')
     <p>恭喜，E-Mail 已经成功验证。</p>
-    <p><a class="btn btn-primary" href="{{ route('root') }}">返回首页</a></p>
+    <p>
+        <a class="btn btn-sm btn-info" href="{{ route('root') }}">返回首页</a>
+    </p>
 @endsection

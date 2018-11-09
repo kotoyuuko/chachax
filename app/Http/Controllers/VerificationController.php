@@ -8,17 +8,19 @@ use Carbon\Carbon;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Notifications\VerificationNotification;
+use App\Exceptions\InvalidRequestException;
 
 class VerificationController extends Controller
 {
-    public function notice()
+    public function notice(Request $request)
     {
-        return view('verification.notice');
-    }
+        $user = $request->user();
+        
+        if ($user->verified_at != null) {
+            throw new InvalidRequestException('你已经验证过邮箱了，无需重复验证。');
+        }
 
-    public function success()
-    {
-        return view('verification.success');
+        return view('verification.notice');
     }
 
     public function send(Request $request)
@@ -26,7 +28,7 @@ class VerificationController extends Controller
         $user = $request->user();
         
         if ($user->verified_at != null) {
-            throw new Exception('你已经验证过邮箱了');
+            throw new InvalidRequestException('你已经验证过邮箱了，无需重复验证。');
         }
         
         $user->notify(new VerificationNotification());
@@ -42,15 +44,19 @@ class VerificationController extends Controller
         $token = $request->input('token');
         
         if (!$email || !$token) {
-            throw new Exception('验证链接不正确');
+            throw new InvalidRequestException('验证链接不正确');
         }
         
         if ($token != Cache::get('verification_' . $email)) {
-            throw new Exception('验证链接不正确或已过期');
+            throw new InvalidRequestException('验证链接不正确或已过期');
         }
 
         if (!$user = User::where('email', $email)->first()) {
-            throw new Exception('用户不存在');
+            throw new InvalidRequestException('用户不存在');
+        }
+
+        if ($user->id != $request->user()->id) {
+            throw new InvalidRequestException('需验证用户与登录用户不匹配');
         }
         
         Cache::forget('verification_' . $email);
