@@ -14,7 +14,7 @@ body {
     margin-top: 0px;
 
     .navbar-toggle {
-        margin: 17px 15px;
+        margin-top: 12px;
         border-color: #fff;
     }
 
@@ -24,7 +24,7 @@ body {
         font-size: 18px;
         line-height: 20px;
         height: auto;
-        padding: 20px 14px;
+        padding: 20px 15px;
     }
 
     li {
@@ -32,12 +32,26 @@ body {
             color: #898f92;
             font-size: 14px;
             position: relative;
-            padding: 20px 14px;
+            padding: 20px 15px;
+            line-height: 20px;
             -webkit-transition: color 0.2s, background-color 0.2s;
             -moz-transition: color 0.2s, background-color 0.2s;
             -o-transition: color 0.2s, background-color 0.2s;
             -ms-transition: color 0.2s, background-color 0.2s;
             transition: color 0.2s, background-color 0.2s;
+        }
+    }
+
+    .dropdown-menu {
+        border-radius: 0;
+        border: 0;
+        -webkit-box-shadow: 0 2px 4px rgba(62, 116, 162, 0.08);
+        box-shadow: 0 2px 4px rgba(62, 116, 162, 0.08);
+
+        li {
+            a {
+                padding: 8px 16px;
+            }
         }
     }
 }
