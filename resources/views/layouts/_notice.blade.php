@@ -3,9 +3,9 @@
 
 @section('content')
     <div class="row">
-        <div class="col-md-8 col-md-offset-2">
+        <div class="col-sm-8 col-sm-offset-2">
+            @include('layouts._message')
             <div class="box">
-                @include('layouts._message')
                 <h2>@yield('message.title')</h2>
                 @yield('message.body')
             </div>

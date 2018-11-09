@@ -27,11 +27,12 @@
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu" role="menu">
+                            <li><a href="{{ route('user.profile') }}">个人中心</a></li>
                             <li>
                                 <a href="{{ route('logout') }}"
                                     onclick="event.preventDefault();
                                              document.getElementById('logout-form').submit();">
-                                    退出登录
+                                    退出
                                 </a>
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST">
                                     {{ csrf_field() }}

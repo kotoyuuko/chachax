@@ -3,7 +3,7 @@
 
 @section('content')
     <div class="row">
-        <div class="col-md-8 col-md-offset-2">
+        <div class="col-sm-8 col-sm-offset-2">
             <div class="box">
                 <h2 class="text-center">登录</h2>
                 <form class="form-horizontal" method="POST" action="{{ route('login') }}">
