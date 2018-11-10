@@ -151,3 +151,23 @@ body {
         margin-left: 20px;
     }
 }
+
+.root-page {
+    #banner {
+        padding: 90px 0 70px;
+    }
+    #banner h2 {
+        font-size: 50px;
+        color: #7f97ad;
+    }
+    #banner .description {
+        font-size: 18px;
+        color: #8094a1;
+        margin-top: 20px;
+    }
+    #banner .btn {
+        margin-top: 60px;
+        padding: 20px 25px;
+        font-weight: 700;
+    }
+}
