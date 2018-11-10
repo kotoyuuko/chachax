@@ -24,6 +24,14 @@
                 <form class="form-horizontal" method="POST" action="{{ route('user.profile') }}">
                     {{ csrf_field() }}
 
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">头像</label>
+
+                        <div class="col-md-6">
+                            <a class="btn btn-sm btn-info" href="https://cn.gravatar.com" target="_blank">前往 Gravatar 修改</a>
+                        </div>
+                    </div>
+
                     <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
                         <label for="name" class="col-md-3 control-label">昵称</label>
 
