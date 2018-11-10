@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
+use App\Models\RedeemCode;
 use App\Models\PaymentLog;
 use Jenssegers\Agent\Agent;
 use Illuminate\Http\Request;
 use App\Http\Requests\OnlinePaymentRequest;
+use App\Http\Requests\RedeemPaymentRequest;
 
 class PaymentController extends Controller
 {
@@ -17,7 +20,7 @@ class PaymentController extends Controller
             'payment' => 'youzan',
             'payment_id' => 0,
             'amount' => $request->amount,
-            'description' => '充值 ' . $request->amount . ' 元',
+            'description' => '通过在线支付充值 ' . $request->amount . ' 元',
             'paid_at' => null
         ]);
 
@@ -39,5 +42,31 @@ class PaymentController extends Controller
             return view('payment.qrcode')
                 ->with('qrcode', $response['qr_code']);
         }
+    }
+
+    public function redeem(RedeemPaymentRequest $request)
+    {
+        $code = RedeemCode::where('code', $request->code)->first();
+        $code->usable -= 1;
+        $code->save();
+
+        $user = $request->user();
+        $user->balance += $code->amount;
+        $user->save();
+
+        $payment = PaymentLog::create([
+            'user_id' => $user->id,
+            'type' => 'recharge',
+            'payment' => 'redeem',
+            'payment_id' => $code->id,
+            'amount' => $code->amount,
+            'description' => '使用兑换码充值 ' . $code->amount . ' 元',
+            'paid_at' => Carbon::now()
+        ]);
+
+        $request->session()
+            ->flash('success', '成功使用兑换码 ' . $code->code . ' 充值 ' . $code->amount . ' 元');
+
+        return redirect()->route('user.recharge');
     }
 }

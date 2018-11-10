@@ -43,7 +43,31 @@
             </div>
             <div class="box">
                 <h2>兑换码</h2>
-                <p>test</p>
+                <form class="form-horizontal" method="POST" action="{{ route('payment.redeem') }}">
+                    {{ csrf_field() }}
+
+                    <div class="form-group{{ $errors->has('code') ? ' has-error' : '' }}">
+                        <label for="code" class="col-md-3 control-label">兑换码</label>
+
+                        <div class="col-md-8">
+                            <input id="code" type="text" class="form-control" name="code" required>
+
+                            @if ($errors->has('code'))
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('code') }}</strong>
+                                </span>
+                            @endif
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-8 col-md-offset-3">
+                            <button type="submit" class="btn btn-primary">
+                                兑换
+                            </button>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
         <div class="col-sm-8">
