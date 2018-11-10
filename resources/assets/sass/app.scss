@@ -51,6 +51,13 @@ body {
         }
     }
 
+    .nav > li.active {
+        a, a:hover {
+            background: #fff;
+            font-weight: bold;
+        }
+    }
+
     .dropdown-menu {
         border-radius: 0;
         border: 0;

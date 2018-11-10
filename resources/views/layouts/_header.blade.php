@@ -7,12 +7,20 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="{{ url('/') }}">
+            <a class="navbar-brand" href="{{ route('root') }}">
                 {{ env('APP_NAME') }}
             </a>
         </div>
         <div class="collapse navbar-collapse" id="app-navbar-collapse">
             <ul class="nav navbar-nav">
+                @auth
+                    <li class="{{ Route::is('home') ? 'active' : '' }}">
+                        <a href="{{ route('home') }}">首页</a>
+                    </li>
+                @endauth
+                <li class="{{ Route::is('tos') ? 'active' : '' }}">
+                    <a href="{{ route('tos') }}">用户协议</a>
+                </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 @guest
