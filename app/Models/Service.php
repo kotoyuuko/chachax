@@ -14,4 +14,14 @@ class Service extends Model
     {
         return $this->belongsTo(Plan::class, 'plan_id');
     }
+
+    public static function securities()
+    {
+        return [
+            'aes-128-gcm' => 'AES-128-GCM',
+            'chacha20-poly1305' => 'ChaCha20-Poly1305',
+            'auto' => '自动',
+            'none' => '无'
+        ];
+    }
 }
