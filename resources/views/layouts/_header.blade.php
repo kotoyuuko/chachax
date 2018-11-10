@@ -28,6 +28,7 @@
                         </a>
                         <ul class="dropdown-menu" role="menu">
                             <li><a href="{{ route('user.profile') }}">个人中心</a></li>
+                            <li><a href="{{ route('user.recharge') }}">充值</a></li>
                             <li>
                                 <a href="{{ route('logout') }}"
                                     onclick="event.preventDefault();

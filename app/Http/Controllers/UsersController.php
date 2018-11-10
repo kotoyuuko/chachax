@@ -29,4 +29,12 @@ class UsersController extends Controller
 
         return redirect()->route('user.profile');
     }
+
+    public function recharge(Request $request)
+    {
+        $user = $request->user();
+
+        return view('users.recharge')
+            ->with('user', $user);
+    }
 }

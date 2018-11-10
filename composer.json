@@ -8,8 +8,10 @@
         "php": ">=7.0.0",
         "encore/laravel-admin": "^1.6",
         "fideloper/proxy": "~3.3",
+        "jenssegers/agent": "^2.6",
         "laravel/framework": "5.5.*",
-        "laravel/tinker": "~1.0"
+        "laravel/tinker": "~1.0",
+        "overtrue/laravel-youzan": "^2.0"
     },
     "require-dev": {
         "filp/whoops": "~2.0",
