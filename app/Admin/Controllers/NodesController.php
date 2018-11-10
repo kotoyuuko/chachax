@@ -65,6 +65,12 @@ class NodesController extends Controller
             $filter->between('created_at', '创建时间')->datetime();
         });
 
+        $grid->tools(function ($tools) {
+            $tools->batch(function ($batch) {
+                $batch->disableDelete();
+            });
+        });
+
         return $grid;
     }
 

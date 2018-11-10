@@ -13,4 +13,5 @@ Route::group([
     $router->resource('users', 'UsersController');
     $router->resource('redeem_codes', 'RedeemCodesController');
     $router->resource('nodes', 'NodesController');
+    $router->resource('plans', 'PlansController');
 });

@@ -2,7 +2,8 @@
 
 namespace App\Admin\Controllers;
 
-use App\Models\RedeemCode;
+use App\Models\Node;
+use App\Models\Plan;
 use App\Http\Controllers\Controller;
 use Encore\Admin\Controllers\HasResourceActions;
 use Encore\Admin\Form;
@@ -10,14 +11,14 @@ use Encore\Admin\Grid;
 use Encore\Admin\Layout\Content;
 use Encore\Admin\Show;
 
-class RedeemCodesController extends Controller
+class PlansController extends Controller
 {
     use HasResourceActions;
 
     public function index(Content $content)
     {
         return $content
-            ->header('兑换码列表')
+            ->header('套餐列表')
             ->description(' ')
             ->body($this->grid());
     }
@@ -25,7 +26,7 @@ class RedeemCodesController extends Controller
     public function edit($id, Content $content)
     {
         return $content
-            ->header('编辑兑换码')
+            ->header('编辑套餐')
             ->description(' ')
             ->body($this->form()->edit($id));
     }
@@ -33,21 +34,24 @@ class RedeemCodesController extends Controller
     public function create(Content $content)
     {
         return $content
-            ->header('创建兑换码')
+            ->header('创建套餐')
             ->description(' ')
             ->body($this->form());
     }
 
     protected function grid()
     {
-        $grid = new Grid(new RedeemCode);
+        $grid = new Grid(new Plan);
 
         $grid->id('#')->sortable();
-        $grid->code('兑换码');
-        $grid->usable('可用数')->sortable();
-        $grid->amount('面额')->sortable();
+        $grid->name('套餐名称');
+        $grid->level('Level');
+        $grid->traffic('流量')->display(function ($traffic) {
+            return $traffic . ' MiB';
+        })->sortable();
+        $grid->price('价格')->sortable();
+        $grid->stock('库存')->sortable();
         $grid->created_at('创建时间')->sortable();
-        $grid->updated_at('最后使用')->sortable();
 
         $grid->actions(function ($actions) {
             $actions->disableDelete();
@@ -55,7 +59,7 @@ class RedeemCodesController extends Controller
         });
 
         $grid->filter(function ($filter) {
-            $filter->like('code', '兑换码');
+            $filter->like('name', '套餐名称');
             $filter->between('created_at', '创建时间')->datetime();
         });
 
@@ -70,17 +74,16 @@ class RedeemCodesController extends Controller
 
     protected function form()
     {
-        $form = new Form(new RedeemCode);
+        $form = new Form(new Plan);
 
-        $form->text('code', '兑换码');
-        $form->number('usable', '可用数');
-        $form->decimal('amount', '面额');
-
-        $form->saving(function (Form $form) {
-            if (!$form->code) {
-                $form->code = RedeemCode::findAvailableCode();
-            }
-        });
+        $form->text('name', '套餐名称');
+        $form->textarea('description', '简介');
+        $form->number('level', 'Level');
+        $form->decimal('traffic', '流量');
+        $form->decimal('price', '价格');
+        $form->number('stock', '库存');
+        $form->multipleSelect('nodes', '节点列表')
+            ->options(Node::all()->pluck('name', 'id'));
 
         return $form;
     }
