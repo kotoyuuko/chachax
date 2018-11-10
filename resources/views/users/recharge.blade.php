@@ -73,6 +73,64 @@
         <div class="col-sm-8">
             <div class="box">
                 <h2>交易记录</h2>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>类型</th>
+                            <th>支付方式</th>
+                            <th>金额</th>
+                            <th>描述</th>
+                            <th>支付时间</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (count($logs) > 0)
+                            @foreach ($logs as $log)
+                                <tr>
+                                    <td>#{{ $log->id }}</td>
+                                    <td>
+                                        @switch($log->type)
+                                            @case('recharge')
+                                                充值
+                                                @break
+                                            @case('pay')
+                                                消费
+                                                @break
+                                            @default
+                                                未知
+                                        @endswitch
+                                    </td>
+                                    <td>
+                                        @switch($log->payment)
+                                            @case('balance')
+                                                余额
+                                                @break
+                                            @case('youzan')
+                                                在线支付
+                                                @break
+                                            @case('redeem')
+                                                兑换码
+                                                @break
+                                            @default
+                                                未知
+                                        @endswitch
+                                    </td>
+                                    <td>{{ $log->amount }}</td>
+                                    <td>{{ $log->description }}</td>
+                                    <td>{{ $log->paid_at ? $log->paid_at : '未支付' }}</td>
+                                </tr>
+                            @endforeach
+                        @else
+                            <tr>
+                                <td colspan="6">没有查询到记录</td>
+                            </tr>
+                        @endif
+                    </tbody>
+                </table>
+                <div class="text-right">
+                    {{ $logs->links() }}
+                </div>
             </div>
         </div>
     </div>
