@@ -8,7 +8,7 @@ ______                            _              _                              
                                           __/ |
                                          |___/
   ========================================================
-  ChaChaX
+  ChaChaX {{ CHACHAX_VERSION }}
   Made with love by kotoyuuko
 -->
 <!DOCTYPE html>
