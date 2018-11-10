@@ -12,7 +12,7 @@
             <div class="box">
                 <h4>
                     <strong>余额</strong>
-                    <span class="pull-right">{{ $user->balance }}</span>
+                    <span class="pull-right">{{ $user->balance }} 元</span>
                 </h4>
             </div>
             <div class="box">
