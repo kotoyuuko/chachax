@@ -22,14 +22,6 @@ class UsersController extends Controller
             ->body($this->grid());
     }
 
-    public function show($id, Content $content)
-    {
-        return $content
-            ->header('查看用户资料')
-            ->description(' ')
-            ->body($this->detail($id));
-    }
-
     public function edit($id, Content $content)
     {
         return $content
