@@ -15,4 +15,5 @@ Route::group([
     $router->resource('nodes', 'NodesController');
     $router->resource('plans', 'PlansController');
     $router->resource('services', 'ServicesController');
+    $router->resource('payment_logs', 'PaymentLogsController');
 });
