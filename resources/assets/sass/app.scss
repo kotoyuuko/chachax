@@ -109,9 +109,13 @@ body {
     padding: 20px 20px 10px;
     position: relative;
     background: #fff;
-}
-.box h2 {
-    margin: 0 0 20px;
+
+    h2 {
+        margin: 0 0 20px;
+    }
+    h4 {
+        margin: 0 0 10px;
+    }
 }
 
 .user-profile-page {

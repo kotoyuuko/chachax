@@ -5,14 +5,16 @@
     <div class="row">
         <div class="col-sm-12">
             @include('layouts._message')
-            <div class="alert alert-info" role="alert">
-                <strong>帐号余额</strong>
-                {{ $user->balance }} 元
-            </div>
         </div>
     </div>
     <div class="row">
         <div class="col-sm-4">
+            <div class="box">
+                <h4>
+                    <strong>余额</strong>
+                    <span class="pull-right">{{ $user->balance }}</span>
+                </h4>
+            </div>
             <div class="box">
                 <h2>在线充值</h2>
                 <form class="form-horizontal" method="POST" action="{{ route('payment.online') }}">
