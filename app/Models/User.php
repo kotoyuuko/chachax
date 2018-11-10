@@ -21,4 +21,9 @@ class User extends Authenticatable
     {
         return 'https://gravatar.loli.net/avatar/' . md5($this->email) . '?s=' . $size;
     }
+
+    public function payment_logs()
+    {
+        return $this->hasMany(PaymentLog::class, 'user_id');
+    }
 }

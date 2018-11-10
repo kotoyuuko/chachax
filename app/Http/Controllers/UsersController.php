@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\PaymentLog;
 use Illuminate\Http\Request;
 use App\Http\Requests\ProfileRequest;
 use App\Exceptions\InvalidRequestException;
@@ -34,8 +33,7 @@ class UsersController extends Controller
     public function recharge(Request $request)
     {
         $user = $request->user();
-
-        $logs = PaymentLog::where('user_id', $user->id)->orderBy('created_at', 'desc')->paginate(15);
+        $logs = $user->payment_logs()->orderBy('created_at', 'desc')->paginate(15);
 
         return view('users.recharge')
             ->with('user', $user)
