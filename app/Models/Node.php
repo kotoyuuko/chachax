@@ -14,4 +14,15 @@ class Node extends Model
     {
         return $this->belongsToMany(Plan::class, 'plan_nodes', 'node_id', 'plan_id');
     }
+
+    public static function networks()
+    {
+        return [
+            'tcp' => 'TCP',
+            'kcp' => 'KCP',
+            'ws' => 'WebSocket',
+            'http' => 'HTTP',
+            'domainsocket' => 'DomainSocket'
+        ];
+    }
 }

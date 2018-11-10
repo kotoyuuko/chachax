@@ -12,4 +12,5 @@ Route::group([
     $router->get('/', 'HomeController@index');
     $router->resource('users', 'UsersController');
     $router->resource('redeem_codes', 'RedeemCodesController');
+    $router->resource('nodes', 'NodesController');
 });
