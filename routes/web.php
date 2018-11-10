@@ -10,12 +10,11 @@ Route::middleware('auth')->group(function () {
 
     Route::get('user/profile', 'UsersController@profile')->name('user.profile');
     Route::post('user/profile', 'UsersController@update');
+});
 
+Route::middleware('verified')->group(function () {
     Route::get('user/recharge', 'UsersController@recharge')->name('user.recharge');
 
     Route::post('payment/online', 'PaymentController@online')->name('payment.online');
     Route::post('payment/redeem', 'PaymentController@redeem')->name('payment.redeem');
-});
-
-Route::middleware('verified')->group(function () {
 });
