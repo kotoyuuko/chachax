@@ -5,6 +5,7 @@ namespace App\Admin\Controllers;
 use App\Models\Node;
 use App\Models\Plan;
 use App\Models\Service;
+use App\Models\CouponCode;
 use App\Http\Controllers\Controller;
 use Encore\Admin\Controllers\HasResourceActions;
 use Encore\Admin\Form;
@@ -81,6 +82,8 @@ class ServicesController extends Controller
         $form->number('alter_id', 'Alter ID');
         $form->select('security', '加密方式')->options(Service::securities());
         $form->decimal('traffic', '剩余流量');
+        $form->select('coupon_code_id', '优惠券')
+            ->options(CouponCode::all()->pluck('code', 'id'));
         $form->datetime('expired_at', '过期时间')->default(date('Y-m-d H:i:s'));
 
         $form->saving(function (Form $form) {
