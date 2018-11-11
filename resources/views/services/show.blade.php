@@ -32,6 +32,10 @@
                         <span class="pull-right">{{ App\Models\Service::securities()[$service->security] }}</span>
                     </p>
                     <p>
+                        <b>总流量</b>
+                        <span class="pull-right">{{ $service->plan->traffic }} MiB</span>
+                    </p>
+                    <p>
                         <b>可用流量</b>
                         <span class="pull-right">{{ $service->traffic }} MiB</span>
                     </p>
@@ -85,7 +89,50 @@
             </div>
             <div class="box">
                 <h4><b>设置</b></h4>
-                <p>test</p>
+                <form class="form-horizontal" method="POST" action="{{ route('services.show', $service) }}">
+                    {{ csrf_field() }}
+
+                    <div class="form-group{{ $errors->has('alter_id') ? ' has-error' : '' }}">
+                        <label for="alter_id" class="col-md-3 control-label">Alter ID</label>
+
+                        <div class="col-md-9">
+                            <input id="alter_id" type="number" step="1" class="form-control" name="alter_id" value="{{ $service->alter_id }}" required>
+
+                            @if ($errors->has('alter_id'))
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('alter_id') }}</strong>
+                                </span>
+                            @endif
+                        </div>
+                    </div>
+
+                    <div class="form-group{{ $errors->has('security') ? ' has-error' : '' }}">
+                        <label for="security" class="col-md-3 control-label">加密方式</label>
+
+                        <div class="col-md-9">
+                            <select class="form-control" name="security" id="security">
+                                <option value="aes-128-gcm" @if ($service->security == 'aes-128-gcm') selected @endif>AES-128-GCM</option>
+                                <option value="chacha20-poly1305" @if ($service->security == 'chacha20-poly1305') selected @endif>ChaCha20-Poly1305</option>
+                                <option value="auto" @if ($service->security == 'auto') selected @endif>自动</option>
+                                <option value="none" @if ($service->security == 'none') selected @endif>无</option>
+                            </select>
+
+                            @if ($errors->has('security'))
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('security') }}</strong>
+                                </span>
+                            @endif
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-9 col-md-offset-3">
+                            <button type="submit" class="btn btn-primary">
+                                保存
+                            </button>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

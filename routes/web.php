@@ -28,4 +28,5 @@ Route::middleware('verified')->group(function () {
 
     Route::get('services', 'ServicesController@root')->name('services.root');
     Route::get('services/{service}', 'ServicesController@show')->name('services.show');
+    Route::post('services/{service}', 'ServicesController@save');
 });
