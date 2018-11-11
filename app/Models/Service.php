@@ -10,6 +10,8 @@ class Service extends Model
         'user_id', 'plan_id', 'uuid', 'alter_id', 'security', 'traffic', 'expired_at'
     ];
 
+    protected $dates = ['expired_at'];
+
     public function plan()
     {
         return $this->belongsTo(Plan::class, 'plan_id');

@@ -94,7 +94,7 @@ class CouponCodesController extends Controller
             }
         });
         $form->number('limit', '最少购买月数')->default(1);
-        $form->text('total', '总量')->rules('required|numeric|min:0');
+        $form->number('total', '总量')->rules('required|numeric|min:1');
         $form->datetime('not_before', '开始时间');
         $form->datetime('not_after', '结束时间');
         $form->switch('enabled', '启用')->default(true);

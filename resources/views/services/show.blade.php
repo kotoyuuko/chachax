@@ -85,7 +85,48 @@
         <div class="col-sm-4">
             <div class="box">
                 <h4><b>续费</b></h4>
-                <p>test</p>
+                <form class="form-horizontal" method="POST" action="{{ route('services.renew', $service) }}">
+                    {{ csrf_field() }}
+
+                    <div class="form-group{{ $errors->has('time') ? ' has-error' : '' }}">
+                        <label for="time" class="col-md-3 control-label">时长</label>
+
+                        <div class="col-md-9">
+                            <div class="input-group">
+                                <input id="time" name="time" type="number" step="1" class="form-control" aria-describedby="basic-addon" required>
+                                <span class="input-group-addon" id="basic-addon">月</span>
+                            </div>
+
+                            @if ($errors->has('time'))
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('time') }}</strong>
+                                </span>
+                            @endif
+                        </div>
+                    </div>
+
+                    <div class="form-group{{ $errors->has('code') ? ' has-error' : '' }}">
+                        <label for="code" class="col-md-3 control-label">优惠码</label>
+
+                        <div class="col-md-9">
+                            <input id="code" type="text" class="form-control" name="code">
+
+                            @if ($errors->has('code'))
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('code') }}</strong>
+                                </span>
+                            @endif
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-9 col-md-offset-3">
+                            <button type="submit" class="btn btn-primary">
+                                续费
+                            </button>
+                        </div>
+                    </div>
+                </form>
             </div>
             <div class="box">
                 <h4><b>设置</b></h4>
