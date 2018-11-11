@@ -20,6 +20,9 @@
                     </div>
                 </div>
             @endforeach
+            <div class="col-sm-12 text-center">
+                {{ $plans->links() }}
+            </div>
         @else
             <div class="alert alert-info" role="alert">
                 <p>目前没有可用套餐</p>

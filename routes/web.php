@@ -25,4 +25,7 @@ Route::middleware('verified')->group(function () {
     Route::get('plans/{plan}', 'PlansController@show')->name('plans.show');
     Route::post('plans/{plan}/confirm', 'PlansController@confirm')->name('plans.confirm');
     Route::post('plans/{plan}/buy', 'PlansController@buy')->name('plans.buy');
+
+    Route::get('services', 'ServicesController@root')->name('services.root');
+    Route::get('services/{service}', 'ServicesController@show')->name('services.show');
 });

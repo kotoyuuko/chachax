@@ -26,4 +26,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(PaymentLog::class, 'user_id');
     }
+
+    public function services()
+    {
+        return $this->hasMany(Service::class, 'user_id');
+    }
 }

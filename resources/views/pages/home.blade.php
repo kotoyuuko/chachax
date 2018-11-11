@@ -12,6 +12,9 @@
                     </div>
                 </div>
             @endforeach
+            <div class="col-sm-12 text-center">
+                {{ $posts->links() }}
+            </div>
         @else
             <div class="alert alert-info" role="alert">
                 <p>这里似乎没有公告</p>

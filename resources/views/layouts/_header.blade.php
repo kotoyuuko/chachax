@@ -20,6 +20,9 @@
                     <li class="{{ Route::is('plans*') ? 'active' : '' }}">
                         <a href="{{ route('plans.root') }}">套餐</a>
                     </li>
+                    <li class="{{ Route::is('services*') ? 'active' : '' }}">
+                        <a href="{{ route('services.root') }}">服务</a>
+                    </li>
                 @endauth
                 <li class="{{ Route::is('tos') ? 'active' : '' }}">
                     <a href="{{ route('tos') }}">用户协议</a>

@@ -23,12 +23,20 @@ class PlansController extends Controller
 
     public function show(Plan $plan)
     {
+        if ($plan->stock < 1) {
+            throw new InvalidRequestException('该套餐库存不足');
+        }
+
         return view('plans.show')
             ->with('plan', $plan);
     }
 
     public function confirm(BuyRequest $request, Plan $plan)
     {
+        if ($plan->stock < 1) {
+            throw new InvalidRequestException('该套餐库存不足');
+        }
+
         $couponCode = CouponCode::findCode($request->code);
 
         $price = $plan->price * $request->time;
@@ -48,6 +56,10 @@ class PlansController extends Controller
 
     public function buy(BuyRequest $request, Plan $plan)
     {
+        if ($plan->stock < 1) {
+            throw new InvalidRequestException('该套餐库存不足');
+        }
+
         $user = $request->user();
         $couponCode = CouponCode::findCode($request->code);
 
@@ -78,8 +90,13 @@ class PlansController extends Controller
         $user->balance -= $price;
         $user->save();
 
+        if ($couponCode) {
+            $couponCode->used += 1;
+            $couponCode->save();
+        }
+
         $request->session()->flash('success', '套餐 ' . $plan->name . ' 购买成功');
 
-        return $service;
+        return redirect()->route('services.show', $service);
     }
 }
