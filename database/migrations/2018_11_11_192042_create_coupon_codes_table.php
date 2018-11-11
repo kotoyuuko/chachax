@@ -18,6 +18,7 @@ class CreateCouponCodesTable extends Migration
             $table->string('code')->unique();
             $table->enum('type', ['fixed', 'percent']);
             $table->decimal('value');
+            $table->unsignedInteger('limit')->default(1);
             $table->unsignedInteger('total');
             $table->unsignedInteger('used')->default(0);
             $table->timestamp('not_before')->nullable();

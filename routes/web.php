@@ -22,4 +22,7 @@ Route::middleware('verified')->group(function () {
     Route::post('payment/redeem', 'PaymentController@redeem')->name('payment.redeem');
 
     Route::get('plans', 'PlansController@root')->name('plans.root');
+    Route::get('plans/{plan}', 'PlansController@show')->name('plans.show');
+    Route::post('plans/{plan}/confirm', 'PlansController@confirm')->name('plans.confirm');
+    Route::post('plans/{plan}/buy', 'PlansController@buy')->name('plans.buy');
 });

@@ -17,6 +17,9 @@
                     <li class="{{ Route::is('home') ? 'active' : '' }}">
                         <a href="{{ route('home') }}">首页</a>
                     </li>
+                    <li class="{{ Route::is('plans*') ? 'active' : '' }}">
+                        <a href="{{ route('plans.root') }}">套餐</a>
+                    </li>
                 @endauth
                 <li class="{{ Route::is('tos') ? 'active' : '' }}">
                     <a href="{{ route('tos') }}">用户协议</a>
