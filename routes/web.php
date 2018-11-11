@@ -20,4 +20,6 @@ Route::middleware('verified')->group(function () {
 
     Route::post('payment/online', 'PaymentController@online')->name('payment.online');
     Route::post('payment/redeem', 'PaymentController@redeem')->name('payment.redeem');
+
+    Route::get('plans', 'PlansController@root')->name('plans.root');
 });

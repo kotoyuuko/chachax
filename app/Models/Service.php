@@ -15,6 +15,11 @@ class Service extends Model
         return $this->belongsTo(Plan::class, 'plan_id');
     }
 
+    public function coupon_code()
+    {
+        return $this->belongsTo(CouponCode::class);
+    }
+
     public static function securities()
     {
         return [
