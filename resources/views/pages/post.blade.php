@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', $post->title)
+@section('title', $post ? $post->title : 'TOS')
 
 @section('content')
     <div class="row">

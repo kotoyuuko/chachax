@@ -17,9 +17,9 @@ class Service extends Model
         return $this->belongsTo(Plan::class, 'plan_id');
     }
 
-    public function coupon_code()
+    public function traffic_logs()
     {
-        return $this->belongsTo(CouponCode::class);
+        return $this->hasMany(TrafficLog::class, 'service_id');
     }
 
     public static function securities()

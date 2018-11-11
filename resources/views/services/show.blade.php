@@ -44,7 +44,7 @@
                         <span class="pull-right">{{ $service->expired_at }}</span>
                     </p>
                     <p class="text-right">
-                        <a class="btn btn-sm btn-info" href="">流量记录</a>
+                        <a class="btn btn-sm btn-info" href="{{ route('services.logs', $service) }}">流量记录</a>
                     </p>
                 </div>
             </div>

@@ -103,4 +103,17 @@ class ServicesController extends Controller
 
         return redirect()->route('services.show', $service);
     }
+
+    public function logs(Request $request, Service $service)
+    {
+        if ($request->user()->id != $service->user_id) {
+            throw new InvalidRequestException('该服务不属于已登录用户');
+        }
+
+        $logs = $service->traffic_logs()->orderBy('created_at', 'desc')->paginate(15);
+
+        return view('services.logs')
+            ->with('service', $service)
+            ->with('logs', $logs);
+    }
 }
