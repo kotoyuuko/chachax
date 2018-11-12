@@ -10,6 +10,7 @@
                         <tr>
                             <th>#</th>
                             <th>套餐</th>
+                            <th>UUID</th>
                             <th>可用流量</th>
                             <th>过期时间</th>
                             <th>&nbsp;</th>
@@ -21,6 +22,7 @@
                                 <tr>
                                     <td>#{{ $service->id }}</td>
                                     <td>{{ $service->plan->name }}</td>
+                                    <td>{{ $service->uuid }}</td>
                                     <td>{{ $service->traffic }} MiB</td>
                                     <td>{{ $service->expired_at }}</td>
                                     <td>
@@ -30,7 +32,7 @@
                             @endforeach
                         @else
                             <tr>
-                                <td colspan="5">没有查询到记录</td>
+                                <td colspan="6">没有查询到记录</td>
                             </tr>
                         @endif
                     </tbody>
