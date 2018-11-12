@@ -6,6 +6,7 @@
     "type": "project",
     "require": {
         "php": ">=7.0.0",
+        "dingo/api": "^2.0.0-alpha2",
         "encore/laravel-admin": "^1.6",
         "fideloper/proxy": "~3.3",
         "jenssegers/agent": "^2.6",
@@ -62,5 +63,7 @@
         "preferred-install": "dist",
         "sort-packages": true,
         "optimize-autoloader": true
-    }
+    },
+    "minimum-stability" : "dev",
+    "prefer-stable" : true
 }
