@@ -8,7 +8,7 @@
                 <div class="col-sm-6">
                     <div class="box">
                         <h2>{{ $post->title }}</h2>
-                        {{ $post->body }}
+                        {!! $post->body !!}
                     </div>
                 </div>
             @endforeach
