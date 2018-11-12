@@ -22,7 +22,7 @@ class NodeClientsController extends Controller
 
         if ($request->clients) {
             foreach ($request->clients as $client) {
-                if ($client['uplink'] + $client['uplink'] < 105) {
+                if ($client['uplink'] + $client['uplink'] < 1050000) {
                     continue;
                 }
                 
