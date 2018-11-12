@@ -1,58 +1,76 @@
-<p align="center"><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
+## 关于 ChaChaX
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+ChaChaX 是一个 V2Ray 的 Web 面板，可以实现流量计费和统计功能。
 
-## About Laravel
+ChaChaX 分为 Web 端和 Node 端，二者需配合使用，Web 端即为本项目，Node 端暂无开源计划。
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as:
+## 安装 ChaChaX
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+#### 配置节点
 
-Laravel is accessible, yet powerful, providing tools needed for large, robust applications.
+> ChaChaX Node 端暂不开源，请自行根据 Web 端的 API 进行开发。
 
-## Learning Laravel
+在节点上安装 ChaChaX Node 端并运行。
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of any modern web application framework, making it a breeze to get started learning the framework.
+#### 开通微小店
 
-If you're not in the mood to read, [Laracasts](https://laracasts.com) contains over 1100 video tutorials on a range of topics including Laravel, modern PHP, unit testing, JavaScript, and more. Boost the skill level of yourself and your entire team by digging into our comprehensive video library.
+去这里注册并开通小店：[https://h5.youzan.com/v2/index/wxdpc](https://h5.youzan.com/v2/index/wxdpc )
 
-## Laravel Sponsors
+手机下载客户端开通，不是微商城！是微小店，免费的！
 
-We would like to extend our thanks to the following sponsors for helping fund on-going Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell):
+#### 注册有赞云
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[British Software Development](https://www.britishsoftware.co)**
-- [Fragrantica](https://www.fragrantica.com)
-- [SOFTonSOFA](https://softonsofa.com/)
-- [User10](https://user10.com)
-- [Soumettre.fr](https://soumettre.fr/)
-- [CodeBrisk](https://codebrisk.com)
-- [1Forge](https://1forge.com)
-- [TECPRESSO](https://tecpresso.co.jp/)
-- [Pulse Storm](http://www.pulsestorm.net/)
-- [Runtime Converter](http://runtimeconverter.com/)
-- [WebL'Agence](https://weblagence.com/)
+去这里注册个人开发者：[https://www.youzanyun.com](https://www.youzanyun.com)
 
-## Contributing
+然后创建自用型应用，填写应用名称，下一步，选择你上面开通的小店名称并完成授权绑定。
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+> 注意：这里绑定应用的时候是没有微小店选项的，填写完应用名称后下一步是店铺授权，就有你手机上创建的微小店名称可选的。
 
-## Security Vulnerabilities
+#### 下载代码
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+    git clone https://github.com/kotoyuuko/thanks.git /var/www/thanks
+
+然后把 `nginx` 啥的配好，这里就不浪费文字说明了。
+
+#### 建立数据库
+
+使用 `mysql` 命令行工具或 `phpMyAdmin` 建好数据库用户和数据库。
+
+#### 配置程序
+
+把 `.env.example` 重命名为 `.env`，然后打开 `.env`，使用文本编辑工具打开并编辑配置
+
+#### 安装程序
+
+    php artisan key:generate
+    php artisan migrate
+    php artisan db:seed
+    php artisan cache:clear
+    php artisan config:cache
+    php artisan route:cache
+    php artisan view:clear
+    php artisan storage:link
+
+#### 生成前端资源
+
+先去装个 yarn，然后：
+
+    yarn
+
+#### 添加计划任务
+
+    crontab -u www -e
+
+添加下面的任务：
+
+    * * * * * /usr/bin/php7.2 /var/www/chachax/artisan schedule:run >> /dev/null 2 > &1
+
+#### 测试
+
+> 后台默认用户名密码均为 `admin`。
+
+然后自己测试一下吧，有问题欢迎 `issue`～
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+[MIT license](https://opensource.org/licenses/MIT).
