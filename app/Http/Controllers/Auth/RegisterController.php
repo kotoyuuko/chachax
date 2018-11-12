@@ -51,11 +51,11 @@ class RegisterController extends Controller
 
         $inviteCode = InviteCode::findCode($request->code);
 
-        if (env('REQUIRE_INVITE', false) && !$inviteCode) {
+        if (config('env.require_invite') && !$inviteCode) {
             throw new InvalidRequestException('系统开启了强制邀请注册，请填写有效的邀请码');
         }
 
-        if (env('REQUIRE_INVITE', false) && $inviteCode->usable < 1) {
+        if (config('env.require_invite') && $inviteCode->usable < 1) {
             throw new InvalidRequestException('邀请码已达到最大使用次数');
         }
 

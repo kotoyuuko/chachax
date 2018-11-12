@@ -63,7 +63,7 @@
                         <label for="code" class="col-md-4 control-label">邀请码</label>
 
                         <div class="col-md-6">
-                            <input id="code" type="text" class="form-control" name="code" @if (env('REQUIRE_INVITE', false)) required @endif>
+                            <input id="code" type="text" class="form-control" name="code" @if (config('env.require_invite')) required @endif>
                         </div>
                     </div>
 

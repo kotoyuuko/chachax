@@ -78,8 +78,8 @@ class PlansController extends Controller
             'user_id' => $user->id,
             'plan_id' => $plan->id,
             'uuid' => Uuid::generate(4)->string,
-            'alter_id' => env('DEFAULT_ALTER_ID', 16),
-            'security' => env('DEFAULT_SECURITY', 'auto'),
+            'alter_id' => config('env.default_alter_id'),
+            'security' => config('env.default_security'),
             'traffic' => $plan->traffic,
             'expired_at' => Carbon::now()->addMonths($request->time)
         ]);
