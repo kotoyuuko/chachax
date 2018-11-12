@@ -60,6 +60,14 @@
                     </div>
 
                     <div class="form-group">
+                        <label for="code" class="col-md-4 control-label">邀请码</label>
+
+                        <div class="col-md-6">
+                            <input id="code" type="text" class="form-control" name="code" @if (env('REQUIRE_INVITE', false)) required @endif>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
                         <div class="col-md-6 col-md-offset-4">
                             <button type="submit" class="btn btn-primary">
                                 注册

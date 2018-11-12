@@ -3,9 +3,15 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Models\User;
+use App\Models\InviteCode;
+use App\Models\InviteLog;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Validation\Rule;
+use Illuminate\Http\Request;
+use App\Exceptions\InvalidRequestException;
 
 class RegisterController extends Controller
 {
@@ -37,6 +43,40 @@ class RegisterController extends Controller
     public function __construct()
     {
         $this->middleware('guest');
+    }
+
+    public function register(Request $request)
+    {
+        $this->validator($request->all())->validate();
+
+        $inviteCode = InviteCode::findCode($request->code);
+
+        if (env('REQUIRE_INVITE', false) && !$inviteCode) {
+            throw new InvalidRequestException('系统开启了强制邀请注册，请填写有效的邀请码');
+        }
+
+        if (env('REQUIRE_INVITE', false) && $inviteCode->usable < 1) {
+            throw new InvalidRequestException('邀请码已达到最大使用次数');
+        }
+
+        $user = $this->create($request->all());
+
+        if ($inviteCode) {
+            $inviteCode->usable -= 1;
+            $inviteCode->save();
+
+            $inviteLog = InviteLog::create([
+                'user_id' => $user->id,
+                'invite_code_id' => $inviteCode->id
+            ]);
+        }
+
+        event(new Registered($user));
+
+        $this->guard()->login($user);
+
+        return $this->registered($request, $user)
+                        ?: redirect($this->redirectPath());
     }
 
     /**
