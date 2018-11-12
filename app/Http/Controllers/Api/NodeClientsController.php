@@ -22,6 +22,10 @@ class NodeClientsController extends Controller
 
         if ($request->clients) {
             foreach ($request->clients as $client) {
+                if ($client['uplink'] + $client['uplink'] < 105) {
+                    continue;
+                }
+                
                 $service = Service::findWithUuid($client['id']);
 
                 if (!$service) {
