@@ -26,7 +26,8 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command('payment:update')->everyMinute();
         $schedule->command('payment:clean')->everyThirtyMinutes();
-        $schedule->command('service:clean')->daily();
+        $schedule->command('services:clean')->daily();
+        $schedule->command('traffic:reset')->monthlyOn(1, '01:00');
     }
 
     /**
