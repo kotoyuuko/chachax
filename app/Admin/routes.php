@@ -19,4 +19,6 @@ Route::group([
     $router->resource('posts', 'PostsController');
     $router->resource('traffic_logs', 'TrafficLogsController');
     $router->resource('coupon_codes', 'CouponCodesController');
+    $router->resource('invite_codes', 'InviteCodesController');
+    $router->resource('invite_logs', 'InviteLogsController');
 });

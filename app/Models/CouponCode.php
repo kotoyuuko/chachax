@@ -45,8 +45,6 @@ class CouponCode extends Model
 
     public static function findCode($code)
     {
-        $now = Carbon::now();
-
         return self::where('code', $code)
             ->where('enabled', true)
             ->first();
