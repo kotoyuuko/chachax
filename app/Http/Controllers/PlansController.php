@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use App\Models\Plan;
 use App\Models\Service;
 use App\Models\CouponCode;
+use App\Models\PaymentLog;
 use Illuminate\Http\Request;
 use App\Http\Requests\BuyRequest;
 use App\Exceptions\InvalidRequestException;
@@ -82,6 +83,16 @@ class PlansController extends Controller
             'security' => config('env.default_security'),
             'traffic' => $plan->traffic,
             'expired_at' => Carbon::now()->addMonths($request->time)
+        ]);
+
+        $payment = PaymentLog::create([
+            'user_id' => $user->id,
+            'type' => 'pay',
+            'payment' => 'balance',
+            'payment_id' => $service->id,
+            'amount' => $price,
+            'description' => '使用余额购买服务 #' . $service->id,
+            'paid_at' => Carbon::now()
         ]);
 
         $plan->stock -= 1;
