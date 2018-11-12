@@ -8,6 +8,7 @@ use App\Models\TrafficLog;
 use Illuminate\Http\Request;
 use App\Http\Requests\Api\NodeClientsRequest;
 use App\Transformers\NodeClientsTransformer;
+use App\Notifications\TrafficExceedNotification;
 
 class NodeClientsController extends Controller
 {
@@ -32,6 +33,7 @@ class NodeClientsController extends Controller
             $service->traffic -= ($client['uplink'] + $client['downlink']) / 1048576;
             if ($service->traffic < 0) {
                 $service->traffic = 0;
+                $service->user->notify(new TrafficExceedNotification);
             }
             $service->save();
         }

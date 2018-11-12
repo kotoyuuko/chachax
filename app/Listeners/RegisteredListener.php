@@ -18,6 +18,6 @@ class RegisteredListener
     public function handle($event)
     {
         $user = $event->user;
-        $user->notify(new VerificationNotification());
+        $user->notify(new VerificationNotification);
     }
 }
