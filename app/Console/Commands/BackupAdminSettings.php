@@ -48,6 +48,8 @@ class BackupAdminSettings extends Command
             'admin_users',
         ];
         
-        $this->call('iseed', [implode(',', $tables)]);
+        $this->call('iseed', [
+            'tables' => implode(',', $tables)
+        ]);
     }
 }
