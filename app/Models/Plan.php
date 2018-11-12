@@ -14,4 +14,9 @@ class Plan extends Model
     {
         return $this->belongsToMany(Node::class, 'plan_nodes', 'plan_id', 'node_id');
     }
+
+    public function services()
+    {
+        return $this->hasMany(Service::class, 'plan_id');
+    }
 }

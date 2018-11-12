@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 
 class Node extends Model
@@ -24,5 +25,19 @@ class Node extends Model
             'http' => 'HTTP',
             'domainsocket' => 'DomainSocket'
         ];
+    }
+
+    public static function findWithToken($token)
+    {
+        return self::where('token', $token)->first();
+    }
+
+    public static function findAvailableToken($length = 32)
+    {
+        do {
+            $token = Str::random($length);
+        } while (self::query()->where('token', $token)->exists());
+
+        return $token;
     }
 }

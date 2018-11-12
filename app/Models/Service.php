@@ -22,6 +22,11 @@ class Service extends Model
         return $this->hasMany(TrafficLog::class, 'service_id');
     }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
     public static function securities()
     {
         return [
@@ -30,5 +35,10 @@ class Service extends Model
             'auto' => '自动',
             'none' => '无'
         ];
+    }
+
+    public static function findWithUuid($uuid)
+    {
+        return self::where('uuid', $uuid)->first();
     }
 }

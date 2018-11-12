@@ -80,11 +80,18 @@ class NodesController extends Controller
 
         $form->text('name', '节点名称');
         $form->textarea('description', '节点描述');
+        $form->text('token', '连接令牌');
         $form->text('address', '连接地址');
         $form->number('port', '端口');
         $form->select('network', '协议')->options(Node::networks());
         $form->textarea('settings', '附加配置');
         $form->switch('tls', 'TLS');
+
+        $form->saving(function (Form $form) {
+            if (!$form->token) {
+                $form->token = Node::findAvailableToken();
+            }
+        });
 
         return $form;
     }
