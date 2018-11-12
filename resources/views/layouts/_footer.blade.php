@@ -1,7 +1,7 @@
 <footer class="footer">
     <div class="container">
         <p class="pull-left">
-            {{ config('copyright') }}
+            {{ config('env.copyright') }}
             Powered by ChaChaX {{ CHACHAX_VERSION }}.
         </p>
 
