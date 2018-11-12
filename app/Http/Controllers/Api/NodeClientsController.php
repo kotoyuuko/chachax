@@ -20,22 +20,28 @@ class NodeClientsController extends Controller
             return $this->response->errorInternal('节点未注册');
         }
 
-        foreach ($request->clients as $client) {
-            $service = Service::findWithUuid($client['uuid']);
+        if ($request->clients) {
+            foreach ($request->clients as $client) {
+                $service = Service::findWithUuid($client['id']);
 
-            $log = TrafficLog::create([
-                'service_id' => $service->id,
-                'node_id' => $node->id,
-                'uplink' => $client['uplink'] / 1048576,
-                'downlink' => $client['downlink'] / 1048576,
-            ]);
-
-            $service->traffic -= ($client['uplink'] + $client['downlink']) / 1048576;
-            if ($service->traffic < 0) {
-                $service->traffic = 0;
-                $service->user->notify(new TrafficExceedNotification);
+                if (!$service) {
+                    continue;
+                }
+    
+                $log = TrafficLog::create([
+                    'service_id' => $service->id,
+                    'node_id' => $node->id,
+                    'uplink' => $client['uplink'] / 1048576,
+                    'downlink' => $client['downlink'] / 1048576,
+                ]);
+    
+                $service->traffic -= ($client['uplink'] + $client['downlink']) / 1048576;
+                if ($service->traffic < 0) {
+                    $service->traffic = 0;
+                    $service->user->notify(new TrafficExceedNotification);
+                }
+                $service->save();
             }
-            $service->save();
         }
 
         $result = collect();
