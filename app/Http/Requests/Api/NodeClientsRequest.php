@@ -16,7 +16,7 @@ class NodeClientsRequest extends FormRequest
     {
         return [
             'token' => 'required|string|exists:nodes,token',
-            'clients' => 'required|array',
+            'clients' => 'nullable|array',
             'clients.*.id' => ['required', new UuidRule],
             'clients.*.uplink' => 'required|numeric',
             'clients.*.downlink' => 'required|numeric',
