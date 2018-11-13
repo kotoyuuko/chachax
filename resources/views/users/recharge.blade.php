@@ -73,7 +73,7 @@
             </div>
         </div>
         <div class="col-sm-8">
-            <div class="box">
+            <div class="box table-responsive">
                 <h2>交易记录</h2>
                 <table class="table table-hover">
                     <thead>
@@ -130,9 +130,9 @@
                         @endif
                     </tbody>
                 </table>
-                <div class="text-right">
-                    {{ $logs->links() }}
-                </div>
+            </div>
+            <div class="text-right">
+                {{ $logs->links() }}
             </div>
         </div>
     </div>

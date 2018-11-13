@@ -4,7 +4,7 @@
 @section('content')
     <div class="row">
         <div class="col-sm-10 col-sm-offset-1">
-            <div class="box">
+            <div class="box table-responsive">
                 <table class="table table-hover">
                     <thead>
                         <tr>
@@ -37,9 +37,9 @@
                         @endif
                     </tbody>
                 </table>
-                <div class="text-center">
-                    {{ $services->links() }}
-                </div>
+            </div>
+            <div class="text-center">
+                {{ $services->links() }}
             </div>
         </div>
     </div>
