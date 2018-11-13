@@ -162,4 +162,23 @@ class ServicesController extends Controller
 
         return redirect()->route('services.show', $service);
     }
+
+    public function subscription(Request $request, Service $service)
+    {
+        if ($request->user()->id != $service->user_id) {
+            throw new InvalidRequestException('该服务不属于已登录用户');
+        }
+
+        $subscriptionText = '';
+
+        foreach ($service->plan->nodes as $node) {
+            $subscriptionText .= vmess_uri($service, $node);
+            $subscriptionText .= "\n";
+        }
+
+        $response = base64_encode($subscriptionText);
+
+        return response($response)
+            ->header('Content-Type', 'text/plain');
+    }
 }
