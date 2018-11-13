@@ -44,7 +44,7 @@
                         <span class="pull-right">{{ $service->expired_at }}</span>
                     </p>
                     <p class="text-right">
-                        <button id="subscription_url" class="btn btn-sm btn-primary btn-uri" data-clipboard-text="{{ route('services.subscription', $service) }}">
+                        <button id="subscription_url" class="btn btn-sm btn-primary btn-uri" data-clipboard-text="{{ route('services.subscription', $service) }}?token={{ $service->uuid }}">
                             <span class="glyphicon glyphicon-link" aria-hidden="true"></span>
                             订阅地址
                         </button>

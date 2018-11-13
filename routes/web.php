@@ -34,5 +34,6 @@ Route::middleware('verified')->group(function () {
     Route::get('services/{service}/traffic_logs', 'ServicesController@logs')->name('services.logs');
     Route::get('services/{service}/reset', 'ServicesController@reset')->name('services.reset');
     Route::get('services/{service}/{node}/qrcode', 'ServicesController@qrcode')->name('services.node.qrcode');
-    Route::get('services/{service}/subscription', 'ServicesController@subscription')->name('services.subscription');
 });
+
+Route::get('services/{service}/subscription', 'ServicesController@subscription')->name('services.subscription');

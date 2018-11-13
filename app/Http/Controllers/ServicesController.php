@@ -165,8 +165,12 @@ class ServicesController extends Controller
 
     public function subscription(Request $request, Service $service)
     {
-        if ($request->user()->id != $service->user_id) {
-            throw new InvalidRequestException('该服务不属于已登录用户');
+        if (!$request->token) {
+            throw new InvalidRequestException('访问未经授权');
+        }
+
+        if ($request->token != $service->uuid) {
+            throw new InvalidRequestException('Token 不正确');
         }
 
         $subscriptionText = '';
