@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use QrCode;
 use Carbon\Carbon;
+use App\Models\Node;
 use App\Models\Service;
 use App\Models\CouponCode;
 use App\Models\PaymentLog;
@@ -127,5 +129,34 @@ class ServicesController extends Controller
         return view('services.logs')
             ->with('service', $service)
             ->with('logs', $logs);
+    }
+
+    public function qrcode(Request $request, Service $service, Node $node)
+    {
+        $settings = json_decode($node->settings, true);
+
+        $data = array_merge([
+            'v' => '2',
+            'ps' => $node->name,
+            'add' => $node->address,
+            'port' => $node->port,
+            'id' => $service->uuid,
+            'aid' => $service->alter_id,
+            'net' => $node->network,
+            'type' => 'none',
+            'host' => '',
+            'path' => '',
+            'tls' => $node->tls ? 'tls' : '',
+        ], $settings ?? []);
+
+        $json = json_encode($data);
+
+        $qrcode = QrCode::format('png')
+            ->margin(1)
+            ->size(300)
+            ->generate('vmess://' . base64_encode($json));
+
+        return response($qrcode)
+            ->header('Content-Type', 'image/png');
     }
 }

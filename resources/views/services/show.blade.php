@@ -77,6 +77,7 @@
                                 <span class="pull-right">{{ $node->tls ? '开' : '关' }}</span>
                             </p>
                             <p>{{ $node->description }}</p>
+                            <p><img class="img-responsive" src="{{ route('services.node.qrcode', [$service, $node]) }}"></p>
                         </div>
                     </div>
                 @endforeach

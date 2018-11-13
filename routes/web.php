@@ -32,4 +32,6 @@ Route::middleware('verified')->group(function () {
     Route::post('services/{service}/renew', 'ServicesController@renew')->name('services.renew');
     Route::post('services/{service}/renew/confirm', 'ServicesController@renewConfirm')->name('services.renew.confirm');
     Route::get('services/{service}/traffic_logs', 'ServicesController@logs')->name('services.logs');
+    
+    Route::get('services/{service}/{node}/qrcode', 'ServicesController@qrcode')->name('services.node.qrcode');
 });
