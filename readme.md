@@ -28,7 +28,7 @@ ChaChaX 分为 Web 端和 Node 端，二者需配合使用，Web 端即为本项
 
 #### 下载代码
 
-    git clone https://github.com/kotoyuuko/thanks.git /var/www/thanks
+    git clone https://github.com/kotoyuuko/chachax.git /var/www/chachax
 
 然后把 `nginx` 啥的配好，这里就不浪费文字说明了。
 
