@@ -44,10 +44,10 @@
                         <span class="pull-right">{{ $service->expired_at }}</span>
                     </p>
                     <p class="text-right">
-                        <a class="btn btn-sm btn-primary" href="{{ route('services.subscription', $service) }}">
+                        <button id="subscription_url" class="btn btn-sm btn-primary btn-uri" data-clipboard-text="{{ route('services.subscription', $service) }}">
                             <span class="glyphicon glyphicon-link" aria-hidden="true"></span>
                             订阅地址
-                        </a>
+                        </button>
                         <a class="btn btn-sm btn-info" href="{{ route('services.logs', $service) }}">流量记录</a>
                     </p>
                 </div>
@@ -87,10 +87,10 @@
                                     <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#qrcode_{{ $node->id }}">
                                         <span class="glyphicon glyphicon-qrcode" aria-hidden="true"></span>
                                     </button>
-                                    <a class="btn btn-xs btn-primary" href="{{ vmess_uri($service, $node) }}">
+                                    <button id="node_url_{{ $node->id }}" class="btn btn-xs btn-primary btn-uri" data-clipboard-text="{{ vmess_uri($service, $node) }}">
                                         <span class="glyphicon glyphicon-link" aria-hidden="true"></span>
                                         URL
-                                    </a>
+                                    </button>
                                 </span>
                             </p>
                         </div>

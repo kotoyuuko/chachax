@@ -6,6 +6,7 @@
  */
 
 require('./bootstrap');
+var ClipboardJS = require('clipboard');
 
 /*
 window.Vue = require('vue');
@@ -76,5 +77,34 @@ $(function () {
                 return false;
             }
         }
+    });
+
+    function setTooltip(btnId, message) {
+        $('#' + btnId).tooltip('hide')
+            .attr('data-original-title', message)
+            .tooltip('show');
+    }
+
+    function hideTooltip(btnId) {
+        setTimeout(function () {
+            $('#' + btnId).tooltip('hide');
+        }, 1000);
+    }
+
+    $('.btn-uri').tooltip({
+        trigger: 'click',
+        placement: 'top'
+    });
+
+    var clipboard = new ClipboardJS('.btn-uri');
+
+    clipboard.on('success', function(e) {
+        setTooltip(e.trigger.id, '已复制');
+        hideTooltip(e.trigger.id);
+    });
+    
+    clipboard.on('error', function(e) {
+        setTooltip(e.trigger.id, '复制失败');
+        hideTooltip(e.trigger.id);
     });
 });
