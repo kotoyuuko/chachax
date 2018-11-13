@@ -133,6 +133,10 @@ class ServicesController extends Controller
 
     public function qrcode(Request $request, Service $service, Node $node)
     {
+        if ($request->user()->id != $service->user_id) {
+            throw new InvalidRequestException('该服务不属于已登录用户');
+        }
+        
         $settings = json_decode($node->settings, true);
 
         $data = array_merge([
