@@ -134,6 +134,14 @@
                 <form class="form-horizontal" method="POST" action="{{ route('services.show', $service) }}">
                     {{ csrf_field() }}
 
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">UUID</label>
+
+                        <div class="col-md-9">
+                            <a class="btn btn-sm btn-primary" href="{{ route('services.reset', $service) }}">点击此处重置</a>
+                        </div>
+                    </div>
+
                     <div class="form-group{{ $errors->has('alter_id') ? ' has-error' : '' }}">
                         <label for="alter_id" class="col-md-3 control-label">Alter ID</label>
 

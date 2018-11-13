@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Uuid;
 use QrCode;
 use Carbon\Carbon;
 use App\Models\Node;
@@ -136,7 +137,7 @@ class ServicesController extends Controller
         if ($request->user()->id != $service->user_id) {
             throw new InvalidRequestException('该服务不属于已登录用户');
         }
-        
+
         $settings = json_decode($node->settings, true);
 
         $data = array_merge([
@@ -162,5 +163,19 @@ class ServicesController extends Controller
 
         return response($qrcode)
             ->header('Content-Type', 'image/png');
+    }
+
+    public function reset(Request $request, Service $service)
+    {
+        if ($request->user()->id != $service->user_id) {
+            throw new InvalidRequestException('该服务不属于已登录用户');
+        }
+
+        $service->uuid = Uuid::generate(4)->string;
+        $service->save();
+
+        $request->session()->flash('success', 'UUID 重置成功，所有节点将在 10 分钟之内同步更新。');
+
+        return redirect()->route('services.show', $service);
     }
 }
