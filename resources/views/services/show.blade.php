@@ -44,6 +44,7 @@
                         <span class="pull-right">{{ $service->expired_at }}</span>
                     </p>
                     <p class="text-right">
+                        <a class="btn btn-sm btn-primary" href="javascript:alert('功能开发中');">订阅地址</a>
                         <a class="btn btn-sm btn-info" href="{{ route('services.logs', $service) }}">流量记录</a>
                     </p>
                 </div>
@@ -56,6 +57,7 @@
                                 <b>节点 #{{ $node->id }}</b>
                                 <span class="pull-right">{{ $node->name }}</span>
                             </h4>
+                            <p>{{ $node->description }}</p>
                             <p>
                                 <b>连接地址</b>
                                 <span class="pull-right">{{ $node->address }}</span>
@@ -76,8 +78,23 @@
                                 <b>TLS</b>
                                 <span class="pull-right">{{ $node->tls ? '开' : '关' }}</span>
                             </p>
-                            <p>{{ $node->description }}</p>
-                            <p><img class="img-responsive" src="{{ route('services.node.qrcode', [$service, $node]) }}"></p>
+                            <p>
+                                <b>快速配置</b>
+                                <span class="pull-right">
+                                    <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#qrcode_{{ $node->id }}">
+                                        <span class="glyphicon glyphicon-qrcode" aria-hidden="true"></span>
+                                    </button>
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="qrcode_{{ $node->id }}" tabindex="-1" role="dialog">
+                        <div class="modal-dialog modal-sm" role="document">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <img class="img-responsive" src="{{ route('services.node.qrcode', [$service, $node]) }}">
+                                </div>
+                            </div>
                         </div>
                     </div>
                 @endforeach

@@ -138,28 +138,12 @@ class ServicesController extends Controller
             throw new InvalidRequestException('该服务不属于已登录用户');
         }
 
-        $settings = json_decode($node->settings, true);
-
-        $data = array_merge([
-            'v' => '2',
-            'ps' => $node->name,
-            'add' => $node->address,
-            'port' => $node->port,
-            'id' => $service->uuid,
-            'aid' => $service->alter_id,
-            'net' => $node->network,
-            'type' => 'none',
-            'host' => '',
-            'path' => '',
-            'tls' => $node->tls ? 'tls' : '',
-        ], $settings ?? []);
-
-        $json = json_encode($data);
+        $uri = vmess_uri($service, $node);
 
         $qrcode = QrCode::format('png')
             ->margin(1)
             ->size(300)
-            ->generate('vmess://' . base64_encode($json));
+            ->generate($uri);
 
         return response($qrcode)
             ->header('Content-Type', 'image/png');
