@@ -45,6 +45,10 @@ class DeleteExpiredPayment extends Command
             ->get();
         
         foreach ($payments as $payment) {
+            \Log::info("Payment deleted.", [
+                'id' => $payment->id
+            ]);
+            
             $payment->delete();
         }
     }

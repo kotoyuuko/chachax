@@ -45,6 +45,10 @@ class ServiceExhaustedNotify extends Command
             ->get();
         
         foreach ($services as $service) {
+            \Log::info("Service exhausted notified.", [
+                'id' => $service->id
+            ]);
+
             $service->user->notify(new ServiceExhaustedNotification);
         }
     }

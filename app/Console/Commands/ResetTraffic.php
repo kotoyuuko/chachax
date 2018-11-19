@@ -42,6 +42,10 @@ class ResetTraffic extends Command
         $services = Service::where('expired_at', '>', Carbon::now())->get();
 
         foreach ($services as $service) {
+            \Log::info("Resetting service traffic.", [
+                'id' => $service->id
+            ]);
+
             $service->traffic = $service->plan->traffic;
             $service->save();
         }

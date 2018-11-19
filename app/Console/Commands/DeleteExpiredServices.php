@@ -42,6 +42,10 @@ class DeleteExpiredServices extends Command
         $services = Service::where('expired_at', '<', Carbon::now())->get();
 
         foreach ($services as $service) {
+            \Log::info("Service deleted.", [
+                'id' => $service->id
+            ]);
+
             $service->delete();
         }
     }

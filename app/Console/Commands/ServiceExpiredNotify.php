@@ -45,6 +45,10 @@ class ServiceExpiredNotify extends Command
             ->get();
         
         foreach ($services as $service) {
+            \Log::info("Service expired notified.", [
+                'id' => $service->id
+            ]);
+
             $service->user->notify(new ServiceExpiredNotification);
         }
     }

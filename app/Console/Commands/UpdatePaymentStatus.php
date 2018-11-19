@@ -52,12 +52,21 @@ class UpdatePaymentStatus extends Command
             $response = $result['response'];
             
             if ($response['total_results'] > 0) {
+                \Log::info("Payment paid.", [
+                    'id' => $payment->id
+                ]);
+
                 $payment->paid_at = Carbon::now();
                 $payment->save();
 
                 $user = User::find($payment->user_id);
                 $user->balance += $payment->amount;
                 $user->save();
+
+                \Log::info("User balance updated.", [
+                    'id' => $user->id,
+                    'balance' => $user->balance
+                ]);
             }
         }
     }
