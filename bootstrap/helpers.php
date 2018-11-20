@@ -1,6 +1,6 @@
 <?php
 
-define('CHACHAX_VERSION', '0.3.3');
+define('CHACHAX_VERSION', '0.4.0');
 
 if ( ! function_exists('route_class')) {
     function route_class()
