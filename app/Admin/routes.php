@@ -21,4 +21,5 @@ Route::group([
     $router->resource('coupon_codes', 'CouponCodesController');
     $router->resource('invite_codes', 'InviteCodesController');
     $router->resource('invite_logs', 'InviteLogsController');
+    $router->resource('packages', 'PackagesController');
 });
