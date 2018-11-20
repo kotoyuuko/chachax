@@ -20,6 +20,10 @@ class NodeClientsController extends Controller
             return $this->response->errorInternal('节点未注册');
         }
 
+        \Log::info('Node sending data.', [
+            'id' => $node->id
+        ]);
+
         if ($request->clients) {
             foreach ($request->clients as $client) {
                 if ($client['uplink'] + $client['uplink'] < 105) {
@@ -29,17 +33,25 @@ class NodeClientsController extends Controller
                 $service = Service::findWithUuid($client['id']);
 
                 if (!$service) {
+                    \Log::warning('Service not found', [
+                        'id' => $client['id']
+                    ]);
+
                     continue;
                 }
+
+                $traffic = ($client['uplink'] + $client['downlink']) / 1048576;
+                $traffic = $traffic * $node->rate;
     
                 $log = TrafficLog::create([
                     'service_id' => $service->id,
                     'node_id' => $node->id,
                     'uplink' => $client['uplink'] / 1048576,
                     'downlink' => $client['downlink'] / 1048576,
+                    'traffic' => $traffic,
                 ]);
     
-                $service->traffic -= ($client['uplink'] + $client['downlink']) / 1048576;
+                $service->traffic -= $traffic;
                 if ($service->traffic < 0) {
                     $service->traffic = 0;
                     $service->user->notify(new TrafficExceedNotification);

@@ -62,6 +62,10 @@
                             </h4>
                             <p>{{ $node->description }}</p>
                             <p>
+                                <b>费率</b>
+                                <span class="pull-right">{{ $node->rate }}x</span>
+                            </p>
+                            <p>
                                 <b>连接地址</b>
                                 <span class="pull-right">{{ $node->address }}</span>
                             </p>

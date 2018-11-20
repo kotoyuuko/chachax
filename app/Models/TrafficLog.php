@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class TrafficLog extends Model
 {
     protected $fillable = [
-        'service_id', 'node_id', 'uplink', 'downlink'
+        'service_id', 'node_id', 'uplink', 'downlink', 'traffic'
     ];
 
     public function service()

@@ -12,6 +12,7 @@
                             <th>节点</th>
                             <th>上行流量</th>
                             <th>下行流量</th>
+                            <th>结算流量</th>
                             <th>记录时间</th>
                         </tr>
                     </thead>
@@ -20,15 +21,16 @@
                             @foreach ($logs as $log)
                                 <tr>
                                     <td>#{{ $log->id }}</td>
-                                    <td>{{ $log->node->name }}</td>
+                                    <td>{{ $log->node->name }} - {{ $log->node->rate }}x</td>
                                     <td>{{ $log->uplink }} MiB</td>
                                     <td>{{ $log->downlink }} MiB</td>
+                                    <td>{{ $log->traffic }} MiB</td>
                                     <td>{{ $log->created_at }}</td>
                                 </tr>
                             @endforeach
                         @else
                             <tr>
-                                <td colspan="5">没有查询到记录</td>
+                                <td colspan="6">没有查询到记录</td>
                             </tr>
                         @endif
                     </tbody>
