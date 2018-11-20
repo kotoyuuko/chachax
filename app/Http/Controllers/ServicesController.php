@@ -7,11 +7,13 @@ use QrCode;
 use Carbon\Carbon;
 use App\Models\Node;
 use App\Models\Service;
+use App\Models\Package;
 use App\Models\CouponCode;
 use App\Models\PaymentLog;
 use Illuminate\Http\Request;
 use App\Http\Requests\ServiceSaveRequest;
 use App\Http\Requests\ServiceRenewRequest;
+use App\Http\Requests\PackageBuyRequest;
 use App\Exceptions\InvalidRequestException;
 
 class ServicesController extends Controller
@@ -30,9 +32,12 @@ class ServicesController extends Controller
             throw new InvalidRequestException('该服务不属于已登录用户');
         }
 
+        $packages = Package::get();
+
         return view('services.show')
             ->with('user', $request->user())
-            ->with('service', $service);
+            ->with('service', $service)
+            ->with('packages', $packages);
     }
 
     public function save(ServiceSaveRequest $request, Service $service)
@@ -184,5 +189,39 @@ class ServicesController extends Controller
 
         return response($response)
             ->header('Content-Type', 'text/plain');
+    }
+
+    public function package(PackageBuyRequest $request, Service $service)
+    {
+        if ($request->user()->id != $service->user_id) {
+            throw new InvalidRequestException('该服务不属于已登录用户');
+        }
+
+        $user = $request->user();
+        $package = Package::find($request->package);
+
+        if ($user->balance - $package->price < 0) {
+            throw new InvalidRequestException('帐号余额不足');
+        }
+
+        $payment = PaymentLog::create([
+            'user_id' => $user->id,
+            'type' => 'pay',
+            'payment' => 'balance',
+            'payment_id' => $service->id,
+            'amount' => $package->price,
+            'description' => '使用余额为服务 #' . $service->id . ' 购买流量 ' . $package->traffic . ' MiB',
+            'paid_at' => Carbon::now()
+        ]);
+
+        $service->traffic += $package->traffic;
+        $service->save();
+
+        $user->balance -= $package->price;
+        $user->save();
+
+        $request->session()->flash('success', '流量 ' . $package->traffic . ' MiB 购买成功');
+
+        return redirect()->route('services.show', $service);
     }
 }

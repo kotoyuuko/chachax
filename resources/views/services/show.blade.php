@@ -212,6 +212,44 @@
                     </div>
                 </form>
             </div>
+            <div class="box">
+                <h4><b>流量包</b></h4>
+                <form class="form-horizontal" method="POST" action="{{ route('services.package', $service) }}">
+                    {{ csrf_field() }}
+
+                    <div class="form-group{{ $errors->has('package') ? ' has-error' : '' }}">
+                        <label for="package" class="col-md-3 control-label">选择</label>
+
+                        <div class="col-md-9">
+                            <select id="package" class="form-control" name="package" required>
+                                @if (count($packages) > 0)
+                                    @foreach ($packages as $package)
+                                        <option value="{{ $package->id }}">
+                                            {{ $package->price }} 元 - {{ $package->traffic }} MiB
+                                        </option>
+                                    @endforeach
+                                @else
+                                    <option value="0">无</option>
+                                @endif
+                            </select>
+
+                            @if ($errors->has('package'))
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('package') }}</strong>
+                                </span>
+                            @endif
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-9 col-md-offset-3">
+                            <button type="submit" class="btn btn-primary">
+                                购买
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 @endsection
