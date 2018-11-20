@@ -46,6 +46,9 @@ class NodesController extends Controller
         $grid->name('节点名称');
         $grid->address('连接地址');
         $grid->port('端口');
+        $grid->rate('费率')->display(function ($rate) {
+            return $rate . 'x';
+        });
         $grid->network('协议')->display(function ($network) {
             return Node::networks()[$network];
         });
@@ -81,6 +84,7 @@ class NodesController extends Controller
         $form->text('name', '节点名称');
         $form->textarea('description', '节点描述');
         $form->text('token', '连接令牌');
+        $form->decimal('rate', '费率');
         $form->text('address', '连接地址');
         $form->number('port', '端口');
         $form->select('network', '协议')->options(Node::networks());

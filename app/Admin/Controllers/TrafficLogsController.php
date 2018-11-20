@@ -40,6 +40,9 @@ class TrafficLogsController extends Controller
         $grid->downlink('下行流量')->display(function ($downlink) {
             return $downlink . ' MiB';
         });
+        $grid->traffic('结算流量')->display(function ($traffic) {
+            return $traffic . ' MiB';
+        });
         $grid->created_at('记录时间')->sortable();
 
         $grid->disableCreateButton();
