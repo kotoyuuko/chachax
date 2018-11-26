@@ -236,6 +236,11 @@ class ServicesController extends Controller
         }
 
         $plan = Plan::find($request->plan);
+        $plan->stock -= 1;
+        $plan->save();
+
+        $service->plan->stock += 1;
+        $service->plan->save();
 
         $service->plan_id = $plan->id;
         $service->save();
