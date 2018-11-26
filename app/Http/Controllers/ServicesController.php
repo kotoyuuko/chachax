@@ -35,7 +35,7 @@ class ServicesController extends Controller
         }
 
         $packages = Package::get();
-        $plans = Plan::get();
+        $plans = Plan::where('stock', '>', 0)->get();
 
         return view('services.show')
             ->with('user', $request->user())
