@@ -238,6 +238,7 @@ class ServicesController extends Controller
         $plan = Plan::find($request->plan);
 
         $service->plan_id = $plan->id;
+        $service->save();
 
         $request->session()->flash('success', '服务 #' . $service->id . ' 已更换到套餐 ' . $plan->name);
 
