@@ -41,7 +41,7 @@ class ServicesController extends Controller
             ->with('user', $request->user())
             ->with('service', $service)
             ->with('packages', $packages)
-            ->with('plan', $plans);
+            ->with('plans', $plans);
     }
 
     public function save(ServiceSaveRequest $request, Service $service)
