@@ -35,6 +35,7 @@ Route::middleware('verified')->group(function () {
     Route::get('services/{service}/reset', 'ServicesController@reset')->name('services.reset');
     Route::get('services/{service}/{node}/qrcode', 'ServicesController@qrcode')->name('services.node.qrcode');
     Route::post('services/{service}/package', 'ServicesController@package')->name('services.package');
+    Route::post('services/{service}/plan', 'ServicesController@plan')->name('services.plan');
 });
 
 Route::get('services/{service}/subscription', 'ServicesController@subscription')->name('services.subscription');

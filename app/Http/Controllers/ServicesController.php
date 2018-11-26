@@ -6,6 +6,7 @@ use Uuid;
 use QrCode;
 use Carbon\Carbon;
 use App\Models\Node;
+use App\Models\Plan;
 use App\Models\Service;
 use App\Models\Package;
 use App\Models\CouponCode;
@@ -14,6 +15,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\ServiceSaveRequest;
 use App\Http\Requests\ServiceRenewRequest;
 use App\Http\Requests\PackageBuyRequest;
+use App\Http\Requests\ChangePlanRequest;
 use App\Exceptions\InvalidRequestException;
 
 class ServicesController extends Controller
@@ -33,11 +35,13 @@ class ServicesController extends Controller
         }
 
         $packages = Package::get();
+        $plans = Plan::get();
 
         return view('services.show')
             ->with('user', $request->user())
             ->with('service', $service)
-            ->with('packages', $packages);
+            ->with('packages', $packages)
+            ->with('plan', $plan);
     }
 
     public function save(ServiceSaveRequest $request, Service $service)
@@ -221,6 +225,21 @@ class ServicesController extends Controller
         $user->save();
 
         $request->session()->flash('success', '流量 ' . $package->traffic . ' MiB 购买成功');
+
+        return redirect()->route('services.show', $service);
+    }
+
+    public function plan(ChangePlanRequest $request, Service $service)
+    {
+        if ($request->user()->id != $service->user_id) {
+            throw new InvalidRequestException('该服务不属于已登录用户');
+        }
+
+        $plan = Plan::find($request->plan);
+
+        $service->plan_id = $plan->id;
+
+        $request->session()->flash('success', '服务 #' . $service->id . ' 已更换到套餐 ' . $plan->name);
 
         return redirect()->route('services.show', $service);
     }

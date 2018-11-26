@@ -250,6 +250,45 @@
                     </div>
                 </form>
             </div>
+
+            <div class="box">
+                <h4><b>更换套餐</b></h4>
+                <form class="form-horizontal" method="POST" action="{{ route('services.plan', $service) }}">
+                    {{ csrf_field() }}
+
+                    <div class="form-group{{ $errors->has('plan') ? ' has-error' : '' }}">
+                        <label for="plan" class="col-md-3 control-label">套餐</label>
+
+                        <div class="col-md-9">
+                            <select id="plan" class="form-control" name="plan" required>
+                                @if (count($plans) > 0)
+                                    @foreach ($plans as $plan)
+                                        <option value="{{ $plan->id }}" @if ($plan->id == $service->plan_id) selected @endif>
+                                            {{ $plan->name }}
+                                        </option>
+                                    @endforeach
+                                @else
+                                    <option value="0">无</option>
+                                @endif
+                            </select>
+
+                            @if ($errors->has('plan'))
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('plan') }}</strong>
+                                </span>
+                            @endif
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-9 col-md-offset-3">
+                            <button type="submit" class="btn btn-primary">
+                                确认更换
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 @endsection
