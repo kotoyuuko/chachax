@@ -29,7 +29,7 @@ class PaymentController extends Controller
             'appid' => config('eapay.appid'),
             'out_trade_no' => $payment->id,
             'total_fee' => $request->amount,
-            'subject' => 'test',
+            'subject' => '账号充值',
             'body' => '为 ' . $request->user()->name . ' 充值 ' . $request->amount . ' 元',
             'show_url' => route('root'),
         ];
