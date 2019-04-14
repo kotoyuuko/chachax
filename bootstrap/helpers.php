@@ -33,3 +33,28 @@ if ( ! function_exists('vmess_uri')) {
         return 'vmess://' . base64_encode($json);
     }
 }
+
+if ( ! function_exists('eapay_add')) {
+    function eapay_add() {
+        $url = 'https://api.eapay.cc/v1/order/add';
+    }
+}
+
+if ( ! function_exists('eapay_sign')) {
+    function eapay_sign($data) {
+        $key = config('eapay.appkey');
+        ksort($data);
+        $sign_str = '';
+        foreach ($data as $k=>$v) {
+            $sign_str .= "{$k}={$v}&";
+        }
+        $sign_str = "{$sign_str}key={$key}";
+        return strtoupper(md5($sign_str));
+    }
+}
+
+if ( ! function_exists('eapay_redirect')) {
+    function eapay_redirect($no) {
+        return redirect()->to('https://api.eapay.cc/v1/order/pay/no/' . $no);
+    }
+}

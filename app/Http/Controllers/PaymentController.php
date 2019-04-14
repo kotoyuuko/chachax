@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
+use App\Models\User;
 use App\Models\RedeemCode;
 use App\Models\PaymentLog;
 use Jenssegers\Agent\Agent;
@@ -24,24 +25,44 @@ class PaymentController extends Controller
             'paid_at' => null
         ]);
 
-        $result = app('youzan')->get('youzan.pay.qrcode.create', [
-            'qr_type' => 'QR_TYPE_DYNAMIC',
-            'qr_price' => $payment->amount * 100,
-            'qr_name' => '为 ' . $request->user()->name . ' 充值 ' . $request->amount . ' 元',
-            'qr_source' => $payment->id,
+        $data = [
+            'appid' => config('eapay.appid'),
+            'out_trade_no' => $payment->id,
+            'total_fee' => $request->amount,
+            'subject' => 'test',
+            'body' => '为 ' . $request->user()->name . ' 充值 ' . $request->amount . ' 元',
+            'show_url' => route('root'),
+        ];
+        $data['sign'] = eapay_sign($data);
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_URL, 'https://api.eapay.cc/v1/order/add');
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, [
+            'Accept: application/json',
         ]);
-        $response = $result['response'];
+        $response = curl_exec($ch);
 
-        $payment->payment_id = $response['qr_id'];
-        $payment->save();
-
-        $agent = new Agent();
-        if ($agent->isPhone()) {
-            return redirect()->to($response['qr_url']);
-        } else {
-            return view('payment.qrcode')
-                ->with('qrcode', $response['qr_code']);
+        if (!$response) {
+            \Log::error('api.eapay.cc/order/add request error');
+            return redirect()
+                ->route('user.recharge')
+                ->with('danger', '系统错误，请联系管理员！');
         }
+
+        $response = json_decode($response, true);
+
+        if (!$response['status']) {
+            \Log::error('api.eapay.cc/order/add create failed: ' . $response['msg']);
+            return redirect()
+                ->route('user.recharge')
+                ->with('danger', '支付接口错误，请联系管理员！');
+        }
+
+        $no = $response['data']['no'];
+        return redirect()->to('https://api.eapay.cc/v1/order/pay/no/' . $no);
     }
 
     public function redeem(RedeemPaymentRequest $request)
@@ -68,5 +89,35 @@ class PaymentController extends Controller
             ->flash('success', '成功使用兑换码 ' . $code->code . ' 充值 ' . $code->amount . ' 元');
 
         return redirect()->route('user.recharge');
+    }
+
+    public function notify(Request $request)
+    {
+        $data = $request->only([
+            'out_trade_no',
+            'pay_method',
+            'total_fee',
+            'trade_no',
+        ]);
+        $sign = eapay_sign($data);
+
+        if ($sign != $request->sign) {
+            return 'FAIL';
+        }
+
+        $payment = PaymentLog::find($data['out_trade_no']);
+
+        if (!$payment) {
+            return 'FAIL';
+        }
+
+        $payment->paid_at = Carbon::now();
+        $payment->save();
+
+        $user = User::find($payment->user_id);
+        $user->balance += $payment->amount;
+        $user->save();
+
+        return 'SUCCESS';
     }
 }
