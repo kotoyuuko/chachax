@@ -40,4 +40,4 @@ Route::middleware('verified')->group(function () {
 
 Route::get('services/{service}/subscription', 'ServicesController@subscription')->name('services.subscription');
 
-Route::post('payment/notify', '')->name('payment.notify');
+Route::post('payment/notify', 'PaymentController@notify')->name('payment.notify');
